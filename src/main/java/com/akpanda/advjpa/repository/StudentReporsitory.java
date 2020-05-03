@@ -1,5 +1,6 @@
 package com.akpanda.advjpa.repository;
 
+import com.akpanda.advjpa.entity.Course;
 import com.akpanda.advjpa.entity.Passport;
 import com.akpanda.advjpa.entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,5 +64,13 @@ public class StudentReporsitory {
         entityManager.clear(); // clears all managed entities
 
         student1.setName("azure to aws migration");
+    }
+
+    public void enterStudentAndCourse(Student student,Course course){
+        entityManager.persist(student);
+        entityManager.persist(course);
+        course.getStudents().add(student);
+        student.getCourseList().add(course);
+
     }
 }
