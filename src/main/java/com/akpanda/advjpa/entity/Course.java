@@ -16,6 +16,7 @@ import java.util.List;
         @NamedQuery(name="get_course)name",
                 query="SELECT c FROM Course c WHERE c.name = :name"),
 })
+@Cacheable
 public class Course {
 
     @Id

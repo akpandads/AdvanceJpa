@@ -14,6 +14,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = AdvjpaApplication.class)
@@ -68,5 +69,15 @@ class CourseRepositoryTest {
     public void testgetCOurseReviewForTest(){
         Review review = entityManager.find(Review.class,600001L);
         logger.info("Course associated ->"+review.getCourse());
+    }
+
+    @Test
+    @Transactional
+    void findByIdTest_l1cache() {
+        Course course = courseReporsitory.findById(10001);
+        logger.info("course found :"+course);
+        Course course1 = courseReporsitory.findById(10001);
+        logger.info("course found :"+course);
+        Assert.assertEquals("ms in 10 days",course.getName());
     }
 }
