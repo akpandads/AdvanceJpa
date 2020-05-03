@@ -1,11 +1,15 @@
 package com.akpanda.advjpa.repository;
 
 import com.akpanda.advjpa.entity.Course;
+import com.akpanda.advjpa.entity.Review;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Repository
 @Transactional
@@ -13,6 +17,8 @@ public class CourseReporsitory {
 
     @Autowired
     EntityManager entityManager;
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public Course findById(long id){
         return entityManager.find(Course.class,id);
@@ -54,5 +60,16 @@ public class CourseReporsitory {
         entityManager.clear(); // clears all managed entities
 
         course1.setName("azure to aws migration");
+    }
+
+    public void addReviewsForCourse(Long courseId, List<Review> reviews){
+        Course course = findById(courseId);
+        logger.info("course Reviews -> "+ course.getReviews());
+
+        for(Review review: reviews){
+            course.addReview(review);
+            review.setCourse(course);
+            entityManager.persist(review);
+        }
     }
 }

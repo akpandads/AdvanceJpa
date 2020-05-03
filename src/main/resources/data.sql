@@ -12,6 +12,12 @@ insert into student(id,name,passport_id) values (200002,'Uselss Bond',400002);
 insert into student(id,name,passport_id) values (200003,'Kvothe Bond',400003);
 
 
-insert into review(id,rating,description) values (600001,'3','good');
-insert into review(id,rating,description) values (600002,'2','');
-insert into review(id,rating,description) values (600003,'5','excellent');
+insert into review(id,rating,description,course_id) values (600001,'3','good',10001);
+insert into review(id,rating,description,course_id) values (600002,'2','',10002);
+insert into review(id,rating,description,course_id) values (600003,'5','excellent',10003);
+
+insert into student_course (student_id,course_id) values (200001,10001);
+insert into student_course (student_id,course_id) values (200001,10002);
+insert into student_course (student_id,course_id) values (200001,10003);
+insert into student_course (student_id,course_id) values (200002,10001);
+insert into student_course (student_id,course_id) values (200002,10003);

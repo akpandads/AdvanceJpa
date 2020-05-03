@@ -44,4 +44,12 @@ class StudentRepositoryTest {
         logger.info("Passport"+passport);
         logger.info("Student "+passport.getStudent());
     }
+
+    @Test
+    @Transactional
+    public void getStudentAndCourses(){
+        Student student = entityManager.find(Student.class,200001L);
+        logger.info("Student ->"+student);
+        logger.info("Courses ->"+student.getCourseList());
+    }
 }

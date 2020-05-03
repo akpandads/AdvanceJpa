@@ -2,6 +2,7 @@ package com.akpanda.advjpa.repository;
 
 import com.akpanda.advjpa.AdvjpaApplication;
 import com.akpanda.advjpa.entity.Course;
+import com.akpanda.advjpa.entity.Review;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -12,6 +13,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.persistence.EntityManager;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = AdvjpaApplication.class)
 class CourseRepositoryTest {
@@ -20,6 +23,9 @@ class CourseRepositoryTest {
 
     @Autowired
     CourseReporsitory courseReporsitory;
+
+    @Autowired
+    EntityManager entityManager;
 
     @Test
     void findByIdTest() {
@@ -31,8 +37,8 @@ class CourseRepositoryTest {
     @Test
     @DirtiesContext
     void deleteByIdTest() {
-        courseReporsitory.deleteById(10002);
-        Course course = courseReporsitory.findById(10002);
+        courseReporsitory.deleteById(10004);
+        Course course = courseReporsitory.findById(10004);
         Assert.assertNull(course);
     }
 
@@ -50,5 +56,17 @@ class CourseRepositoryTest {
     @DirtiesContext
     void playWithEMTest(){
         courseReporsitory.playWithEntityManager();
+    }
+
+    @Test
+    public void testReviewCourseRetrieve(){
+        Course course=courseReporsitory.findById(10003L);
+        logger.info("Reviews -> ", course.getReviews());
+    }
+
+    @Test
+    public void testgetCOurseReviewForTest(){
+        Review review = entityManager.find(Review.class,600001L);
+        logger.info("Course associated ->"+review.getCourse());
     }
 }
